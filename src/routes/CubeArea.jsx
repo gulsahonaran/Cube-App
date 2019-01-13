@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Button, Screen } from 'styled-minimal';
+import { Button, Screen, Label } from 'styled-minimal';
 
 const Input = styled.input`
   background: #121212;
@@ -14,6 +14,18 @@ const Input = styled.input`
   height: 35px;
   font-size: 16px;
   padding: 5px;
+  min-width: 220px;
+`;
+const Select = styled.select`
+  background: #121212;
+  border: none;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  margin: 15px;
+  height: 35px;
+  font-size: 16px;
+  padding: 5px;
+  min-width: 120px;
 `;
 const Div = styled.div`
   position: absolute;
@@ -28,27 +40,27 @@ export class CubeArea extends React.Component {
     user: PropTypes.object.isRequired,
   };
 
-  constructor() {
-    super();
-    global.length = 100;
-    global.grid = 3;
+  constructor(props) {
+    super(props);
+    this.state = { colorV: '#880E4F', lengV: 100, gridV: 3 };
+    global.aniResq = null;
     global.color = '#880E4F';
     global.scene = new THREE.Scene();
     global.camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       1,
-      global.length * 100,
+      this.state.lengV * 100,
     );
     global.renderer = new THREE.WebGLRenderer();
     global.renderer.setSize(window.innerWidth, window.innerHeight);
     global.geometry = new THREE.BoxGeometry(
-      global.length,
-      global.length,
-      global.length,
-      global.grid,
-      global.grid,
-      global.grid,
+      this.state.lengV,
+      this.state.lengV,
+      this.state.lengV,
+      this.state.gridV,
+      this.state.gridV,
+      this.state.gridV,
     );
     global.material = new THREE.MeshBasicMaterial({
       color: global.color,
@@ -56,6 +68,11 @@ export class CubeArea extends React.Component {
       needsUpdate: true,
     });
     global.cube = new THREE.Mesh(global.geometry, global.material);
+
+    this.handleChangeLength = this.handleChangeLength.bind(this);
+    this.handleChangeGrid = this.handleChangeGrid.bind(this);
+    this.handleChangeColor = this.handleChangeColor.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -63,27 +80,36 @@ export class CubeArea extends React.Component {
   }
 
   handleChangeLength = e => {
-    global.length = parseFloat(e.target.value);
+    if (e.target.value === ' ') {
+      $('#lengLbl').css({ display: 'none' });
+    }
+    this.state.lengV = parseFloat(e.target.value);
   };
 
   handleChangeGrid = e => {
-    global.grid = parseFloat(e.target.value);
+    this.state.gridV = parseFloat(e.target.value);
   };
 
   handleChangeColor = e => {
     global.color = e.target.value;
+    this.setState({ colorV: e.target.value });
   };
 
   handleSubmit = e => {
+    this.state.lengV = this.state.lengV > 10000 ? 10000 : this.state.lengV;
+    this.state.lengV = this.state.lengV < 0 ? 0 : this.state.lengV;
+    this.state.gridV = this.state.gridV > 200 ? 200 : this.state.gridV;
+    this.state.gridV = this.state.gridV < 0 ? 0 : this.state.gridV;
+    document.getElementById('gridID').value = this.state.gridV;
+    document.getElementById('lengID').value = this.state.lengV;
     const temp = new THREE.BoxGeometry(
-      global.length,
-      global.length,
-      global.length,
-      global.grid,
-      global.grid,
-      global.grid,
+      this.state.lengV,
+      this.state.lengV,
+      this.state.lengV,
+      this.state.gridV,
+      this.state.gridV,
+      this.state.gridV,
     );
-    console.log(global.color)
     const tempMaterial = new THREE.MeshBasicMaterial({
       color: global.color,
       wireframe: true,
@@ -93,6 +119,7 @@ export class CubeArea extends React.Component {
     global.material = tempMaterial;
     const tempCube = new THREE.Mesh(global.geometry, global.material);
     global.cube = tempCube;
+    window.cancelAnimationFrame(global.aniResq);
     this.createCube();
   };
 
@@ -104,7 +131,7 @@ export class CubeArea extends React.Component {
     global.cube.rotation.x = 0;
     global.cube.rotation.y = 0;
     function renderCube() {
-      requestAnimationFrame(renderCube);
+      global.aniResq = window.requestAnimationFrame(renderCube);
       global.cube.rotation.x += 0.01;
       global.cube.rotation.y += 0.01;
       global.renderer.render(global.scene, global.camera);
@@ -117,17 +144,28 @@ export class CubeArea extends React.Component {
       <Screen key="CubeArea" data-testid="CubeAreaWrapper" id="cubearea">
         <Div>
           <Input
+            id="lengID"
             onChange={this.handleChangeLength}
             type="number"
-            placeholder="Edge Length of Cube"
+            placeholder="Edge Length of Cube(100)"
           />
           <Input
-            onChange={this.handleChmaxValueangeGrid}
+            id="gridID"
+            onChange={this.handleChangeGrid}
             type="number"
-            placeholder="Gridline Count of Cube"
-            max={global.length / 10}
+            placeholder="Gridline Count of Cube(3)"
           />
-          <Input onChange={this.handleChangeColor} placeholder="Color(#ffffff)" />
+          <Select value={this.state.colorV} onChange={this.handleChangeColor}>
+            <option value="#A1887F">Brown</option>
+            <option value="#D50000">Red</option>
+            <option value="#F57C00">Orange</option>
+            <option value="#FFFF00">Yellow</option>
+            <option value="#8BC34A">Green</option>
+            <option value="#0288D1">Blue</option>
+            <option value="#880E4F">Purple</option>
+            <option value="#F48FB1">Pink</option>
+            <option value="#FFFFFF">White</option>
+          </Select>
           <Button type="submit" onClick={this.handleSubmit}>
             Create
           </Button>
