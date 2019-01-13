@@ -1,5 +1,6 @@
 # React Cube App
 [Demo](http://democubeapp.surge.sh/)
+This project build with [React + Redux + Saga Boilerplate starter kit](https://github.com/gilbarbara/react-redux-saga-boilerplate). 
 
 ### Provides
 
