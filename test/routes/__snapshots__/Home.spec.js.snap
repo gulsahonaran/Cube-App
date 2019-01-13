@@ -58,7 +58,7 @@ exports[`Home should render properly 1`] = `
 }
 
 .c0 {
-  background: #000 linear-gradient(to bottom,#00b4d5 0%,#002529 100%) fixed;
+  background: #000 linear-gradient(to bottom,#000000 0%,#000000 100%) fixed;
   color: #fff;
   min-height: 100vh;
   overflow: hidden;
@@ -106,6 +106,9 @@ exports[`Home should render properly 1`] = `
   height: auto;
   max-height: 100%;
   width: 4.8rem;
+  -webkit-animation: rotation 5s infinite;
+  -webkit-animation: rotation 5s infinite;
+  animation: rotation 5s infinite;
 }
 
 .c1 {
@@ -252,7 +255,7 @@ exports[`Home should render properly 1`] = `
               <span
                 className="c7"
               >
-                Start
+                Let's Start
               </span>
             </Text>
           </button>

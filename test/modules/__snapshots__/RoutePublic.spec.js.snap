@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modules/RoutePublic should redirect to /private for authenticated access 1`] = `
+exports[`modules/RoutePublic should redirect to /cube_area for authenticated access 1`] = `
 
 <div id="redirect"
      data-reactroot

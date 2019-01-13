@@ -31,7 +31,7 @@ exports[`NotFound should render properly 1`] = `
 }
 
 .c0 {
-  background: #000 linear-gradient(to bottom,#00b4d5 0%,#002529 100%) fixed;
+  background: #000 linear-gradient(to bottom,#000000 0%,#000000 100%) fixed;
   color: #fff;
   min-height: 100vh;
   overflow: hidden;

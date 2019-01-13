@@ -1,9 +1,13 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Button, Screen } from 'styled-minimal';
+
+import * as THREE from 'three';
 
 const Input = styled.input`
   background: #121212;
@@ -37,9 +41,11 @@ const Div = styled.div`
 export class CubeArea extends React.Component {
   constructor(props) {
     super(props);
+    //Define variables and set default value for Threejs
     this.state = { colorV: '#880E4F', lengV: 100, gridV: 3 };
     global.aniResq = null;
     global.color = '#880E4F';
+    // eslint-disable-next-line no-undef
     global.scene = new THREE.Scene();
     global.camera = new THREE.PerspectiveCamera(
       75,
@@ -63,7 +69,7 @@ export class CubeArea extends React.Component {
       needsUpdate: true,
     });
     global.cube = new THREE.Mesh(global.geometry, global.material);
-
+    //
     this.handleChangeLength = this.handleChangeLength.bind(this);
     this.handleChangeGrid = this.handleChangeGrid.bind(this);
     this.handleChangeColor = this.handleChangeColor.bind(this);
@@ -76,31 +82,39 @@ export class CubeArea extends React.Component {
   };
 
   componentDidMount() {
+    //trigger this function for first created
     this.createCube();
   }
 
   handleChangeLength = e => {
+    //handle change length value and set state.lengV
     this.state.lengV = parseFloat(e.target.value);
     this.setState({ lengV: e.target.value });
   };
 
   handleChangeGrid = e => {
+    //handle change grid count value and set state.gridV
     this.state.gridV = parseFloat(e.target.value);
     this.setState({ gridV: e.target.value });
   };
 
   handleChangeColor = e => {
+    //handle change color value and set state.colorV
     global.color = e.target.value;
     this.setState({ colorV: e.target.value });
   };
 
   handleSubmit = () => {
+    //handle click submit button and update cube
+    //control validation for length and grid count value
     this.state.lengV = this.state.lengV > 10000 ? 10000 : this.state.lengV;
     this.state.lengV = this.state.lengV < 0 ? 0 : this.state.lengV;
     this.state.gridV = this.state.gridV > 200 ? 200 : this.state.gridV;
     this.state.gridV = this.state.gridV < 0 ? 0 : this.state.gridV;
+    //set input value with new value
     document.getElementById('gridID').value = this.state.gridV;
     document.getElementById('lengID').value = this.state.lengV;
+    //update cube
     const temp = new THREE.BoxGeometry(
       this.state.lengV,
       this.state.lengV,
@@ -118,17 +132,22 @@ export class CubeArea extends React.Component {
     global.material = tempMaterial;
     const tempCube = new THREE.Mesh(global.geometry, global.material);
     global.cube = tempCube;
+    //reset cube animation
     window.cancelAnimationFrame(global.aniResq);
+    //trigger this function for new cube
     this.createCube();
   };
 
   createCube() {
+    //create canvas for cube
     document.getElementById('cubearea').appendChild(global.renderer.domElement);
+    //set other configure
     global.scene.children = [];
     global.scene.add(global.cube);
     global.camera.position.z = 1000;
     global.cube.rotation.x = 0;
     global.cube.rotation.y = 0;
+    //this function for animation
     function renderCube() {
       global.aniResq = window.requestAnimationFrame(renderCube);
       global.cube.rotation.x += 0.01;

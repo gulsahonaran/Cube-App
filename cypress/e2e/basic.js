@@ -10,17 +10,6 @@ describe('React Cube App', () => {
       .click();
   });
 
-  it('should be able to view the private area', () => {
-    cy.getByTestId('PrivateWrapper')
-      .should('have.length', 1)
-      .getByTestId('GitHubGrid')
-      .should('have.length', 1)
-      .should('have.attr', 'data-type', 'react');
-
-    cy.getByTestId('GitHubGrid')
-      .get('li')
-      .should('have.length', 30);
-  });
 
   it('should be able to dismiss the alert', () => {
     cy.getByTestId('AlertWrapper').should('have.length', 1);

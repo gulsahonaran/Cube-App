@@ -1,6 +1,7 @@
 // Polyfills
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from "react-router";
 
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';

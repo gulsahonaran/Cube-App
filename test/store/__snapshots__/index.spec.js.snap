@@ -16,14 +16,6 @@ Object {
   "app": Object {
     "alerts": Array [],
   },
-  "github": Object {
-    "repos": Object {
-      "data": Object {},
-      "message": "",
-      "query": "",
-      "status": "idle",
-    },
-  },
   "user": Object {
     "isAuthenticated": false,
     "status": "idle",

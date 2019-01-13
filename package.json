@@ -39,7 +39,9 @@
     "react-helmet": "^5.2.0",
     "react-inlinesvg": "^0.8.3",
     "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-three": "^0.9.7",
     "react-transition-group": "^2.5.2",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
@@ -52,6 +54,7 @@
     "scroll-doc": "^0.2.1",
     "styled-components": "^4.1.3",
     "styled-minimal": "^0.7.3",
+    "three": "^0.100.0",
     "tree-changes": "^0.4.0",
     "uuid": "^3.3.2"
   },
@@ -204,7 +207,8 @@
     "deploy": "node tools deploy",
     "publish": "node tools publish",
     "bundlesize": "bundlesize",
-    "precommit": "node tools upstream && lint-staged && flow"
+    "precommit": "node tools upstream && lint-staged && flow",
+    "deploy": "surge build http://democubeapp.surge.sh/"
   },
   "husky": {
     "hooks": {
