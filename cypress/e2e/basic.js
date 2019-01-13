@@ -30,20 +30,6 @@ describe('React Cube App', () => {
       .should('not.exist');
   });
 
-  it('should be able to toggle the selector', () => {
-    cy.getByTestId('GitHubSelector')
-      .find('button:last-child')
-      .not('[disabled]')
-      .should('have.text', 'Redux')
-      .click();
-  });
-
-  it('should render the redux repos ', () => {
-    cy.getByTestId('GitHubGrid')
-      .should('have.length', 1)
-      .should('have.attr', 'data-type', 'redux');
-  });
-
   it('should be able to logout', () => {
     cy.get('[class^=Logout]').click();
   });

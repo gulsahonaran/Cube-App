@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Button, Screen, Label } from 'styled-minimal';
+import { Button, Screen } from 'styled-minimal';
 
 const Input = styled.input`
   background: #121212;
@@ -35,11 +35,6 @@ const Div = styled.div`
 `;
 
 export class CubeArea extends React.Component {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = { colorV: '#880E4F', lengV: 100, gridV: 3 };
@@ -75,19 +70,23 @@ export class CubeArea extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+  };
+
   componentDidMount() {
     this.createCube();
   }
 
   handleChangeLength = e => {
-    if (e.target.value === ' ') {
-      $('#lengLbl').css({ display: 'none' });
-    }
     this.state.lengV = parseFloat(e.target.value);
+    this.setState({ lengV: e.target.value });
   };
 
   handleChangeGrid = e => {
     this.state.gridV = parseFloat(e.target.value);
+    this.setState({ gridV: e.target.value });
   };
 
   handleChangeColor = e => {
@@ -95,7 +94,7 @@ export class CubeArea extends React.Component {
     this.setState({ colorV: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = () => {
     this.state.lengV = this.state.lengV > 10000 ? 10000 : this.state.lengV;
     this.state.lengV = this.state.lengV < 0 ? 0 : this.state.lengV;
     this.state.gridV = this.state.gridV > 200 ? 200 : this.state.gridV;

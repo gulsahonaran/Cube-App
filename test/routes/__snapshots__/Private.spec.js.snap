@@ -20,13 +20,6 @@ exports[`Private should render properly 1`] = `
       >
         You can get this boilerplate
          
-        <Link
-          as="a"
-          href="https://github.com/gilbarbara/react-redux-saga-boilerplate/"
-          target="_blank"
-        >
-          here
-        </Link>
       </Paragraph>
     </Header>
     <Box
