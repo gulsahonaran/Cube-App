@@ -1,5 +1,5 @@
 # React Cube App
-[Demo](http://democube.surge.sh/)
+[Demo](http://democubeapp.surge.sh/)
 
 ### Provides
 
